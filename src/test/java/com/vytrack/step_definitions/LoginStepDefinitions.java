@@ -52,7 +52,7 @@ public class LoginStepDefinitions {
     // When user enters "storemanager85" username and "UserUser123" password
     @When("user enters {string} username and {string} password")
     public void user_enters_username_and_password(String string, String string2) {
-        System.out.printf("Login with user name %s and %s password", string, string2);
+        System.out.printf("Login with user name %s and %s password\n", string, string2);
         loginPage.login(string,string2);
     }
 }
