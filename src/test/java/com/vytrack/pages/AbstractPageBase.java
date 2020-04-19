@@ -1,4 +1,4 @@
-package com.vytrack.pages.pages;
+package com.vytrack.pages;
 
 import com.vytrack.utilities.BrowserUtilities;
 import com.vytrack.utilities.Driver;
