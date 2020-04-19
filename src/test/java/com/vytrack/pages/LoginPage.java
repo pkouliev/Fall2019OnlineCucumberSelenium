@@ -5,7 +5,6 @@ import com.vytrack.utilities.ConfigurationReader;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends AbstractPageBase {
 
@@ -28,13 +27,6 @@ public class LoginPage extends AbstractPageBase {
     @FindBy(className = "login-copyright")
     private WebElement logo;
 
-
-    public LoginPage() {
-        //to connect our webdriver, page class and page factory
-        //PageFactory - used to use @FindBy annotations
-        //PageFactory - help to find elements easier
-        PageFactory.initElements(driver, this);
-    }
 
     public String getWarningMessage() {
         return warningMessage.getText();
