@@ -55,6 +55,7 @@ public class CalendarEventsPage extends AbstractPageBase {
         BrowserUtilities.waitForPageToLoad(20);
         BrowserUtilities.wait(2);
         wait.until(ExpectedConditions.visibilityOf(title)).sendKeys(titleValue);
+        wait.until(ExpectedConditions.attributeToBe(title,"value",titleValue));
         // actions.moveToElement(descriptionFrame).perform();
 
         BrowserUtilities.wait(5);
@@ -65,6 +66,7 @@ public class CalendarEventsPage extends AbstractPageBase {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(descriptionFrame));
         //desctiptionTextArea.click();
         desctiptionTextArea.sendKeys(description);
+        wait.until(ExpectedConditions.textToBePresentInElement(desctiptionTextArea,description));
         driver.switchTo().defaultContent(); //exit from the frame
     }
 
