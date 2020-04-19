@@ -21,7 +21,7 @@ public class Driver {
      *
      * Thread safety reduces performance but it makes everything safe.
      *
-     * @return
+     * @return browser
      */
     public synchronized static WebDriver getDriver() {
         //if webdriver object doesn't exist
@@ -29,28 +29,28 @@ public class Driver {
         if (driverPool.get() == null) {
             //specify browser type in configuration.properties file
             String browser = ConfigurationReader.getProperty("browser").toLowerCase();
+            //to run chrome without interface (headless mode)
             switch (browser) {
-                case "chrome":
-                    WebDriverManager.chromedriver().version("79").setup();
+                case "chrome" -> {
+                    WebDriverManager.chromedriver().setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--start-maximized");
                     driverPool.set(new ChromeDriver(chromeOptions));
-                    break;
-                case "chromeheadless":
-                    //to run chrome without interface (headless mode)
-                    WebDriverManager.chromedriver().version("79").setup();
+                }
+                case "chromeheadless" -> {
+                    WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
                     options.setHeadless(true);
                     driverPool.set(new ChromeDriver(options));
-                    break;
-                case "firefox":
+                }
+                case "firefox" -> {
                     WebDriverManager.firefoxdriver().setup();
                     driverPool.set(new FirefoxDriver());
-                    break;
-                default:
-                    throw new RuntimeException("Wrong browser name!");
+                }
+                default -> throw new RuntimeException("Wrong browser name!");
             }
         }
+
         return driverPool.get();
     }
 
@@ -58,35 +58,35 @@ public class Driver {
      *
      * Thread safety reduces performance but it makes everything safe.
      *
-     * @return
+     * @return browser
      */
     public synchronized static WebDriver getDriver(String browser) {
         //if webdriver object doesn't exist
         //create it
         if (driverPool.get() == null) {
             //specify browser type in configuration.properties file
+            //to run chrome without interface (headless mode)
             switch (browser) {
-                case "chrome":
-                    WebDriverManager.chromedriver().version("79").setup();
+                case "chrome" -> {
+                    WebDriverManager.chromedriver().setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.addArguments("--start-maximized");
                     driverPool.set(new ChromeDriver(chromeOptions));
-                    break;
-                case "chromeheadless":
-                    //to run chrome without interface (headless mode)
-                    WebDriverManager.chromedriver().version("79").setup();
+                }
+                case "chromeheadless" -> {
+                    WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
                     options.setHeadless(true);
                     driverPool.set(new ChromeDriver(options));
-                    break;
-                case "firefox":
+                }
+                case "firefox" -> {
                     WebDriverManager.firefoxdriver().setup();
                     driverPool.set(new FirefoxDriver());
-                    break;
-                default:
-                    throw new RuntimeException("Wrong browser name!");
+                }
+                default -> throw new RuntimeException("Wrong browser name!");
             }
         }
+
         return driverPool.get();
     }
 
