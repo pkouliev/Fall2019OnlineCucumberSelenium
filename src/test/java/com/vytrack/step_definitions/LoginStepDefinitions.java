@@ -40,7 +40,6 @@ public class LoginStepDefinitions {
         BrowserUtilities.waitForPageToLoad(10);
         BrowserUtilities.wait(2);
         Assert.assertEquals("Dashboard",Driver.getDriver().getTitle());
-        Driver.closeDriver();
 
     }
 
@@ -48,5 +47,12 @@ public class LoginStepDefinitions {
     public void user_logs_in_as_a_driver() {
         System.out.println("Login as a driver");
         loginPage.login("user19", "UserUser123");
+    }
+
+    // When user enters "storemanager85" username and "UserUser123" password
+    @When("user enters {string} username and {string} password")
+    public void user_enters_username_and_password(String string, String string2) {
+        System.out.printf("Login with user name %s and %s password", string, string2);
+        loginPage.login(string,string2);
     }
 }
