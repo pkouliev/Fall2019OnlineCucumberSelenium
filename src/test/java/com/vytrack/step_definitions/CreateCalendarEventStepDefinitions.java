@@ -2,6 +2,7 @@ package com.vytrack.step_definitions;
 
 import com.vytrack.pages.fleet.activities.CalendarEventsPage;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
 
 public class CreateCalendarEventStepDefinitions {
 
@@ -28,5 +29,15 @@ public class CreateCalendarEventStepDefinitions {
     @Then("user clicks on save and close button")
     public void user_clicks_on_save_and_close_button() {
         calendarEventsPage.clickOnSaveAndClose();
+    }
+
+    @Then("user verifies description {string}")
+    public void user_verifies_description(String string) {
+        Assert.assertEquals(string,calendarEventsPage.getGeneralInfoDescriptionText());
+    }
+
+    @Then("user verifies that title of new calendar event is {string}")
+    public void user_verifies_that_title_of_new_calendar_event_is(String string) {
+        Assert.assertEquals(string,calendarEventsPage.getGeneralInfoDescriptionText());
     }
 }
