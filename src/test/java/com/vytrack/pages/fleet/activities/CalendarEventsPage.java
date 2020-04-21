@@ -5,15 +5,12 @@ import com.vytrack.pages.AbstractPageBase;
 import com.vytrack.utilities.BrowserUtilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
 public class CalendarEventsPage extends AbstractPageBase {
-
-    Actions actions;
 
     @FindBy(css = "[title='Create Calendar event']")
     private WebElement createCalendarEvent;
@@ -36,11 +33,11 @@ public class CalendarEventsPage extends AbstractPageBase {
     @FindBy(css = "iframe[id^='oro_calendar_event_form_description-uid']")
     private WebElement descriptionFrame;
 
-    @FindBy(css = "[id^='oro_calendar_event_form_title-uid")
+    @FindBy(css = "[id^='oro_calendar_event_form_title-uid']")
     private WebElement title;
 
     @FindBy(id = "tinymce")
-    private WebElement desctiptionTextArea;
+    private WebElement descriptionTextArea;
 
     @FindBy(css = "[class='btn-group pull-right'] > button")
     private WebElement saveAndClose;
@@ -51,23 +48,32 @@ public class CalendarEventsPage extends AbstractPageBase {
     @FindBy(xpath = "//label[text()='Description']/following-sibling::div//div")
     private WebElement generalInfoDescription;
 
+    @FindBy(xpath = "//*[contains(text(),'View per page:')]/following-sibling::*//a")
+    private List<WebElement> viewPerPageElements;
+
+    @FindBy(css = "button[class*='btn dropdown-toggle']")
+    private WebElement viewPerPageToggle;
+
+    public List<String> getViewPerPageOptions() {
+        BrowserUtilities.waitForPageToLoad(20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='Create Calendar event']")));
+        viewPerPageToggle.click();
+        BrowserUtilities.wait(2);
+        return BrowserUtilities.getTextFromWebElements(viewPerPageElements);
+    }
+
     public void enterCalendarEventTitle(String titleValue) {
         BrowserUtilities.waitForPageToLoad(20);
-        BrowserUtilities.wait(2);
         wait.until(ExpectedConditions.visibilityOf(title)).sendKeys(titleValue);
-        wait.until(ExpectedConditions.attributeToBe(title,"value",titleValue));
-        // actions.moveToElement(descriptionFrame).perform();
-
-        BrowserUtilities.wait(5);
+        wait.until(ExpectedConditions.attributeToBe(title, "value", titleValue));
     }
 
     public void enterCalendarEventDescription(String description) {
         //wait until frame is available and switch to it
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(descriptionFrame));
-        //desctiptionTextArea.click();
-        desctiptionTextArea.sendKeys(description);
-        wait.until(ExpectedConditions.textToBePresentInElement(desctiptionTextArea,description));
-        driver.switchTo().defaultContent(); //exit from the frame
+        descriptionTextArea.sendKeys(description);
+        wait.until(ExpectedConditions.textToBePresentInElement(descriptionTextArea, description));
+        driver.switchTo().defaultContent();//exit from the frame
     }
 
     public void clickOnSaveAndClose() {
@@ -86,8 +92,7 @@ public class CalendarEventsPage extends AbstractPageBase {
         return generalInfoDescription.getText();
     }
 
-    //##################################################################
-
+    //#############################################################
     public List<String> getColumnNames() {
         BrowserUtilities.waitForPageToLoad(20);
         return BrowserUtilities.getTextFromWebElements(columnNames);
@@ -112,7 +117,6 @@ public class CalendarEventsPage extends AbstractPageBase {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("select2-chosen")));
         wait.until(ExpectedConditions.visibilityOf(owner));
         return owner.getText().trim();
-
     }
 
     public void clickToCreateCalendarEvent() {
