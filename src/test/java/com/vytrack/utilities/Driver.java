@@ -9,14 +9,21 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class Driver {
 
+    //same for everyone
     private static ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
-
+    //so no one can create object of Driver class
+    //everyone should call static getter method instead
     private Driver() {
 
     }
 
-
+    /**synchronized makes method thread safe. It ensures that only 1 thread can use it at the time.
+     *
+     * Thread safety reduces performance but it makes everything safe.
+     *
+     * @return
+     */
     public synchronized static WebDriver getDriver() {
         //if webdriver object doesn't exist
         //create it
@@ -41,9 +48,41 @@ public class Driver {
                     WebDriverManager.firefoxdriver().setup();
                     driverPool.set(new FirefoxDriver());
                     break;
-                case "ie":
-                    WebDriverManager.iedriver().setup();
-                    driverPool.set(new InternetExplorerDriver());
+                default:
+                    throw new RuntimeException("Wrong browser name!");
+            }
+        }
+        return driverPool.get();
+    }
+
+    /**synchronized makes method thread safe. It ensures that only 1 thread can use it at the time.
+     *
+     * Thread safety reduces performance but it makes everything safe.
+     *
+     * @return
+     */
+    public synchronized static WebDriver getDriver(String browser) {
+        //if webdriver object doesn't exist
+        //create it
+        if (driverPool.get() == null) {
+            //specify browser type in configuration.properties file
+            switch (browser) {
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments("--start-maximized");
+                    driverPool.set(new ChromeDriver(chromeOptions));
+                    break;
+                case "chromeheadless":
+                    //to run chrome without interface (headless mode)
+                    WebDriverManager.chromedriver().setup();
+                    ChromeOptions options = new ChromeOptions();
+                    options.setHeadless(true);
+                    driverPool.set(new ChromeDriver(options));
+                    break;
+                case "firefox":
+                    WebDriverManager.firefoxdriver().setup();
+                    driverPool.set(new FirefoxDriver());
                     break;
                 default:
                     throw new RuntimeException("Wrong browser name!");
