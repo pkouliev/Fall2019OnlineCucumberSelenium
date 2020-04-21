@@ -3,6 +3,9 @@ package com.vytrack.step_definitions;
 import com.vytrack.utilities.Driver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class Hooks {
 
@@ -12,15 +15,9 @@ public class Hooks {
         Driver.getDriver().manage().window().maximize();
     }
 
-    /**
-     * We can create hooks that will be running only for specific scenarios, based on tags
-     * Hook without any tags will still be executed for every single scenario
-     * We can change order of hooks priority
-     * Lower number - higher priority
-     */
     @Before(value = "@driver", order = 1)
-    public void specialSetup(){
-        System.out.println("Setup for driver");
+    public void specialSetup() {
+        System.out.println("Setup for driver only");
     }
 
     @After("@driver")
@@ -29,7 +26,14 @@ public class Hooks {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown(Scenario scenario) {
+        //how to check if scenario failed
+        if (scenario.isFailed()) {
+            TakesScreenshot takesScreenshot = (TakesScreenshot) Driver.getDriver();
+            byte[] image = takesScreenshot.getScreenshotAs(OutputType.BYTES);
+            //attach screenshot to the report
+            scenario.embed(image, "image/png", scenario.getName());
+        }
         System.out.println("Test clean up");
         Driver.closeDriver();
     }
