@@ -29,10 +29,13 @@ Feature: Login
     When user enters "salesmanager115" username and "UserUser123" password
     Then user should verify that title is a Dashboard
 
+  @scenario_outline
   Scenario Outline: User names test
     When user enters "<username>" username and "<password>" password
     Then user name should be "<name>"
-    Examples: credentials
+
+
+    Examples:
       | username        | password    | name             |
       | user187         | UserUser123 | Jerel Vandervort |
       | user200         | UserUser123 | Lonzo Leuschke   |
