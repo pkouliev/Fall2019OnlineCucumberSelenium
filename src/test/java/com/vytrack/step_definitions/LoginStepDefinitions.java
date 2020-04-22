@@ -64,8 +64,8 @@ public class LoginStepDefinitions {
     }
 
     @When("user logs in as {string}")
-    public void user_logs_in_as(String string) {
-        loginPage.login(string);
+    public void user_logs_in_as(String userType) {
+        loginPage.login(userType);
 
     }
 
