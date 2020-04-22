@@ -70,6 +70,7 @@ public abstract class AbstractPageBase {
 
         // increase this wait time if still failing
         BrowserUtilities.wait(4);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class*='loader-mask']")));
     }
 
 }
