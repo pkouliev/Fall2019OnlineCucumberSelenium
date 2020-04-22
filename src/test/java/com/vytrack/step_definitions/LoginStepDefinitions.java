@@ -62,4 +62,16 @@ public class LoginStepDefinitions {
     public void user_name_should_be(String string) {
         Assert.assertEquals(string,loginPage.getCurrentUserName());
     }
+
+    @When("user logs in as {string}")
+    public void user_logs_in_as(String string) {
+        loginPage.login(string);
+
+    }
+
+    @Then("user verifies that page title is {string}")
+    public void user_verifies_that_page_title_is(String string) {
+        System.out.println("Verify that page title is: "+string);
+        Assert.assertEquals(string,Driver.getDriver().getTitle());
+    }
 }
