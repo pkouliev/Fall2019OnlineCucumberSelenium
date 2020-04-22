@@ -33,7 +33,14 @@ public class CreateCarStepDefinitions {
             vehiclesPage.setModelYear(row.get("Model Year"));
 
             vehiclesPage.setColor(row.get("Color"));
+            //click to save new car
+            vehiclesPage.clickOnSaveAndClose();
         }
+    }
+
+    @Then("user verifies that car info is displayed:")
+    public void user_verifies_that_car_info_is_displayed(io.cucumber.datatable.DataTable dataTable) {
+
     }
 }
 
