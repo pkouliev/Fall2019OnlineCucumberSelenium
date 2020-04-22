@@ -2,6 +2,7 @@ package com.vytrack.step_definitions;
 
 import com.vytrack.pages.fleet.VehiclesPage;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,14 @@ public class CreateCarStepDefinitions {
     }
 
     @Then("user verifies that car info is displayed:")
-    public void user_verifies_that_car_info_is_displayed(io.cucumber.datatable.DataTable dataTable) {
+    public void user_verifies_that_car_info_is_displayed(List<Map<String, String>> dataTable) {
+        for (Map<String, String> row : dataTable) {
+            Assert.assertEquals(row.get("License Plate"), vehiclesPage.getCarGeneralInfo("License Plate"));
+            Assert.assertEquals(row.get("Driver"), vehiclesPage.getCarGeneralInfo("Driver"));
+            Assert.assertEquals(row.get("Location"), vehiclesPage.getCarGeneralInfo("Location"));
+            Assert.assertEquals(row.get("Model Year"), vehiclesPage.getCarGeneralInfo("Model Year"));
+            Assert.assertEquals(row.get("Color"), vehiclesPage.getCarGeneralInfo("Color"));
+        }
 
     }
 }
