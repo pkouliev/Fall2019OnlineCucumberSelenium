@@ -13,7 +13,8 @@ import org.junit.runner.RunWith;
 //        tags = "@create_car_ddt",
         plugin = {
                 "html:target/default-report",
-                "json:target/cucumber1.json"
+                "json:target/cucumber1.json",
+                "rerun:target/rerun.txt"
         }
 
 )
