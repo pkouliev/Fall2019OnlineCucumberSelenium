@@ -14,4 +14,3 @@ Feature: Smoke test
       | sales manager | Customers  | Accounts        | All - Accounts - Customers                                         |
       | sales manager | Customers  | Contacts        | All - Contacts - Customers                                         |
       | sales manager | Activities | Calendar Events | All - Calendar Events - Activities                                 |
-      | sales manager | System     | Jobs            | All - Jobs - System                                                |
