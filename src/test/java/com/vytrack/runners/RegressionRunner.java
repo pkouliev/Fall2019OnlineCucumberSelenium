@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources",
         dryRun = false,
         strict = false,
+        // to exclude smoke test scenarios
         tags = "not @smoke_test",
         plugin = {
                 "html:target/default-report-for-regression",
