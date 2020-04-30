@@ -11,3 +11,11 @@ clean test -P Smoke
 To start regression execute:
 
 clean test -P Regression
+
+To run feature in parallel without limiting number of threads:
+
+    <parallel>methods</parallel>
+    <useUnlimitedThreads>true</useUnlimitedThreads>
+    <includes>
+       <include>**/RegressionRunner.java</include>
+    </includes>
